@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        {% if user.is_authentiated %}
+            <h3>Hello, {{ user }}</h3>
+        {% endif %}
+        <a href="{% url 'accounts:login' %}">Login</a>
+        <form action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="logout">
+        </form>
+        <hr>
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>
