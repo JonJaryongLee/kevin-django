@@ -8,16 +8,23 @@
 </head>
 <body>
     <div class="container">
-        {% if user.is_authentiated %}
-            <h3>Hello, {{ user }}</h3>
-        {% endif %}
-        <a href="{% url 'accounts:login' %}">Login</a>
+    {% if user.is_authenticated %}
+        <h3>Hello, {{ user }}</h3>
         <form action="{% url 'accounts:logout' %}" method="POST">
             {% csrf_token %}
             <input type="submit" value="logout">
         </form>
-        <hr>
-        {% block content %}{% endblock content %}
+        <a href="{% url 'accounts:update' %}">회원정보수정</a>
+        <form action="{% url 'accounts:delete' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="회원탈퇴">
+        </form>
+    {% else %}
+        <a href="{% url 'accounts:login' %}">Login</a>
+        <a href="{% url 'accounts:signup' %}">Signup</a>
+    {% endif %}
+    <hr>
+    {% block content %}{% endblock content %}
     </div>
 </body>
 </html>
