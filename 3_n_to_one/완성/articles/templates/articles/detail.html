@@ -15,4 +15,17 @@
         <input type="submit" value="DELETE">
     </form>
     <a href="{% url 'articles:index' %}">[back]</a>
+    <hr>
+    <h4>댓글 목록</h4>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit">
+    </form>
 {% endblock content %}
