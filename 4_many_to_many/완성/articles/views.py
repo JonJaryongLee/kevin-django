@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_safe, require_http_methods, require_POST
-from .models import Article, Comment
+from .models import Article
 from .forms import ArticleForm, CommentForm
 # Create your views here.
 
@@ -85,3 +85,15 @@ def comments_create(request, pk):
             comment.save()
         return redirect('articles:detail', article.pk)
     return redirect('accounts:login')
+
+@require_POST
+def likes(request, pk):
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, pk=pk)
+        if article.like_users.filter(pk=request.user.pk).exists():
+            article.like_users.remove(request.user)
+        else:
+            article.like_users.add(request.user)
+        return redirect('articles:index')
+    else:
+        return redirect('accounts:login')

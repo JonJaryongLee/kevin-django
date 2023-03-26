@@ -10,6 +10,7 @@
     <div class="container">
     {% if user.is_authenticated %}
         <h3>Hello, {{ user }}</h3>
+        <a href="{% url 'accounts:profile' user %}">내 프로필</a>
         <form action="{% url 'accounts:logout' %}" method="POST">
             {% csrf_token %}
             <input type="submit" value="logout">

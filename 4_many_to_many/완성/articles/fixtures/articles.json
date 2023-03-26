@@ -1,0 +1,28 @@
+[
+{
+    "model": "articles.article",
+    "pk": 1,
+    "fields": {
+        "user": 4,
+        "title": "싸피 언제 끝남?",
+        "content": "진짜 지긋지긋하다.",
+        "updated_at": "2023-03-26T09:34:08.037Z",
+        "created_at": "2023-03-26T09:34:08.037Z",
+        "like_users": []
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "title": "넘나 피곤...",
+        "content": "오늘 수업때 거의 잔 듯. 너무 지루함",
+        "updated_at": "2023-03-26T09:35:17.857Z",
+        "created_at": "2023-03-26T09:35:17.857Z",
+        "like_users": [
+            2
+        ]
+    }
+}
+]
