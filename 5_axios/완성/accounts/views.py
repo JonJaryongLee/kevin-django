@@ -95,21 +95,6 @@ def profile(request, username):
     }
     return render(request, 'accounts/profile.html', context)
 
-# @require_POST
-# def follow(request, user_pk):
-#     if request.user.is_authenticated:
-#         User = get_user_model()
-#         person = User.objects.get(pk=user_pk)
-#         if person != request.user:
-#             if person.followers.filter(pk=request.user.pk).exists():
-#             # if request.user in person.followers.all():
-#                 person.followers.remove(request.user)
-#             else:
-#                 person.followers.add(request.user)
-#         return redirect('accounts:profile', person.username)
-#     else:
-#         return redirect('accounts:login') 
-
 @require_POST
 def follow(request, user_pk):
     if request.user.is_authenticated:
