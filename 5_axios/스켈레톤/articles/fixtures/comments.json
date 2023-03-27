@@ -1,0 +1,35 @@
+[
+{
+    "model": "articles.comment",
+    "pk": 1,
+    "fields": {
+        "user": 4,
+        "article": 1,
+        "content": "자댓...",
+        "created_at": "2023-03-26T09:34:22.453Z",
+        "updated_at": "2023-03-26T09:34:22.453Z"
+    }
+},
+{
+    "model": "articles.comment",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "article": 1,
+        "content": "얼마 안 남았음 힘내!",
+        "created_at": "2023-03-26T09:34:42.668Z",
+        "updated_at": "2023-03-26T09:34:42.668Z"
+    }
+},
+{
+    "model": "articles.comment",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "article": 2,
+        "content": "나도... 알고리즘 할때가 더 좋았음",
+        "created_at": "2023-03-26T09:35:39.136Z",
+        "updated_at": "2023-03-26T09:35:39.136Z"
+    }
+}
+]
