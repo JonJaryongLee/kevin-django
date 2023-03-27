@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.views.decorators.http import require_http_methods, require_POST
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -94,6 +95,21 @@ def profile(request, username):
     }
     return render(request, 'accounts/profile.html', context)
 
+# @require_POST
+# def follow(request, user_pk):
+#     if request.user.is_authenticated:
+#         User = get_user_model()
+#         person = User.objects.get(pk=user_pk)
+#         if person != request.user:
+#             if person.followers.filter(pk=request.user.pk).exists():
+#             # if request.user in person.followers.all():
+#                 person.followers.remove(request.user)
+#             else:
+#                 person.followers.add(request.user)
+#         return redirect('accounts:profile', person.username)
+#     else:
+#         return redirect('accounts:login') 
+
 @require_POST
 def follow(request, user_pk):
     if request.user.is_authenticated:
@@ -101,10 +117,17 @@ def follow(request, user_pk):
         person = User.objects.get(pk=user_pk)
         if person != request.user:
             if person.followers.filter(pk=request.user.pk).exists():
-            # if request.user in person.followers.all():
                 person.followers.remove(request.user)
+                is_followed = False
             else:
                 person.followers.add(request.user)
+                is_followed = True
+            context = {
+                'is_followed': is_followed,
+                'followers_count': person.followers.count(),
+                'followings_count': person.followings.count(),
+            }
+            return JsonResponse(context)
         return redirect('accounts:profile', person.username)
     else:
-        return redirect('accounts:login') 
+        return redirect('accounts:login')

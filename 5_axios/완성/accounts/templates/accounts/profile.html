@@ -1,40 +1,76 @@
-{% extends 'base.html' %}
-{% block content %}
-    <h1>{{ person.username }}님의 프로필</h1>
+{% extends 'base.html' %} {% block content %}
+<h1>{{ person.username }}님의 프로필</h1>
 
-    <div>
-        <div>팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}</div>
-        {% if request.user != person %}
-            <form action="{% url 'accounts:follow' person.pk %}" method="POST">
-                {% csrf_token %}
-                {% if request.user in person.followers.all %}
-                    <input type="submit" value="Unfollow">
-                {% else %}
-                    <input type="submit" value="Follow">
-                {% endif %}
-            </form>
-        {% endif %}
-    </div>
+<div>
+  <div>
+    <span id="followers-count"
+      >팔로잉 : {{ person.followings.all|length }}</span
+    >
+    <span id="followings-count"
+      >팔로워 : {{ person.followers.all|length }}</span
+    >
+  </div>
+  {% if request.user != person %}
+  <form id="follow-form" data-user-id="{{ person.pk }}">
+    {% csrf_token %} {% if request.user in person.followers.all %}
+    <input type="submit" value="Unfollow" />
+    {% else %}
+    <input type="submit" value="Follow" />
+    {% endif %}
+  </form>
+  {% endif %}
+</div>
 
-    <hr>
-    <h2>{{ person.username }}'s 게시글</h2>
-    {% for article in person.article_set.all %}
-        <div>{{ article.title }}</div>
-    {% endfor %}
-    <hr>
-    <h2>{{ person.username }}'s 댓글</h2>
-    {% for comment in person.comment_set.all %}
-        <div>{{ comment.content }}</div>
-    {% endfor %}
+<hr />
+<h2>{{ person.username }}'s 게시글</h2>
+{% for article in person.article_set.all %}
+<div>{{ article.title }}</div>
+{% endfor %}
+<hr />
+<h2>{{ person.username }}'s 댓글</h2>
+{% for comment in person.comment_set.all %}
+<div>{{ comment.content }}</div>
+{% endfor %}
 
-    <hr>
+<hr />
 
-    <h2>{{ person.username }}'s 좋아요한 게시글</h2>
-    {% for article in person.like_articles.all %}
-        <div>{{ article.title }}</div>
-    {% endfor %}
+<h2>{{ person.username }}'s 좋아요한 게시글</h2>
+{% for article in person.like_articles.all %}
+<div>{{ article.title }}</div>
+{% endfor %}
 
-    <hr>
+<hr />
 
-    <a href="{% url 'articles:index' %}">back</a>
-{% endblock content %}
+<a href="{% url 'articles:index' %}">back</a>
+{% endblock content %} {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js"></script>
+<script>
+  const followersCountTag = document.querySelector("#followers-count");
+  const followingsCountTag = document.querySelector("#followings-count");
+  const form = document.querySelector("#follow-form");
+  const followBtn = document.querySelector("#follow-form > input[type=submit]");
+  const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  form.addEventListener("submit", () => {
+    event.preventDefault();
+    const userId = event.target.dataset.userId;
+    axios({
+      method: "post",
+      url: `/accounts/${userId}/follow/`,
+      headers: {
+        "X-CSRFToken": csrftoken,
+      },
+    }).then((response) => {
+      const isFollowed = response.data.is_followed;
+      if (isFollowed === true) {
+        followBtn.value = "언팔로우";
+      } else {
+        followBtn.value = "팔로우";
+      }
+      const followersCount = response.data.followers_count;
+      const followingsCount = response.data.followings_count;
+      followersCountTag.innerText = `팔로워 : ${followersCount}`;
+      followingsCountTag.innerText = `팔로잉 : ${followingsCount}`;
+    });
+  });
+</script>
+{% endblock script %}
