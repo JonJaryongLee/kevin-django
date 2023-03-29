@@ -1,0 +1,35 @@
+[
+{
+    "model": "articles.comment",
+    "pk": 1,
+    "fields": {
+        "article": 1,
+        "user": 2,
+        "content": "자댓...",
+        "created_at": "2023-03-28T08:43:25.169Z",
+        "updated_at": "2023-03-28T08:43:25.169Z"
+    }
+},
+{
+    "model": "articles.comment",
+    "pk": 2,
+    "fields": {
+        "article": 1,
+        "user": 4,
+        "content": "ㅋㅋㅋㅋㅋ 왜 자댓?",
+        "created_at": "2023-03-28T08:43:31.588Z",
+        "updated_at": "2023-03-28T08:43:31.588Z"
+    }
+},
+{
+    "model": "articles.comment",
+    "pk": 3,
+    "fields": {
+        "article": 2,
+        "user": 3,
+        "content": "장고 내가 가르쳐줄까??",
+        "created_at": "2023-03-28T08:43:41.082Z",
+        "updated_at": "2023-03-28T08:43:41.082Z"
+    }
+}
+]
